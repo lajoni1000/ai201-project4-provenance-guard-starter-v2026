@@ -65,7 +65,17 @@ def sentence_length_spread(text: str) -> float:
     before the attack set decides for you.
     """
     # TODO: replace this
-    return 0.0
+    lengths = [len(words(s)) for s in sentences(text)]
+
+    if len(lengths) < 2:
+        return 0.0
+
+    average = statistics.mean(lengths)
+
+    if average == 0:
+        return 0.0
+
+    return statistics.stdev(lengths) / average
 
 
 def type_token_ratio(text: str) -> float:
@@ -81,7 +91,15 @@ def type_token_ratio(text: str) -> float:
     that alone can look like a signal.
     """
     # TODO: replace this
-    return 0.0
+    word_list = words(text)
+
+    if len(word_list) == 0:
+        return 0.0
+
+    unique_words = len(set(word_list))
+
+    return unique_words / len(word_list)
+
 
 
 def punctuation_density(text: str) -> float:
@@ -95,8 +113,14 @@ def punctuation_density(text: str) -> float:
         writers.
     """
     # TODO: replace this
-    return 0.0
+    word_list = words(text)
 
+    if len(word_list) == 0:
+        return 0.0
+
+    punctuation_count = len(re.findall(r"[.,;:!?]", text))
+
+    return punctuation_count / len(word_list)
 
 # ── Combining them ───────────────────────────────────────────────────────────
 
@@ -123,7 +147,20 @@ def style_signal(text: str) -> float:
     to signal one, and it is plain writing that gets accused.
     """
     # TODO: replace this
-    return 0.5
+    if not words(text):
+        return 0.5
+
+    spread = sentence_length_spread(text)
+    vocabulary = type_token_ratio(text)
+    punctuation = punctuation_density(text)
+
+    spread_score = 1.0 - min(spread, 1.0)
+    vocabulary_score = 1.0 - vocabulary
+    punctuation_score = 1.0 - min(punctuation, 1.0)
+
+    score = (spread_score + vocabulary_score + punctuation_score) / 3
+
+    return round(score, 4)
 
 
 if __name__ == "__main__":

@@ -105,16 +105,28 @@ Also, a person could modify AI-generated text by changing words or sentence stru
      signals disagree? -->
 
 **The rule:**
+The system combines two signals to estimate whether a text shows patterns associated with AI-generated writing. The model signal receives more weight because our initial tests showed that the style signal was less reliable for short texts.
+
+When the two signals strongly disagree, the system returns a combined score of 0.50 to represent uncertainty and reduce the risk of falsely classifying human-written text as AI generated.
 
 **The numbers:**
+Model signal weight: 0.70 (70%)
+Style signal weight: 0.30 (30%)
+Combined score = (0.70 * model_score) + (0.30 * style_score)
+Strong disagreement: one signal >= 0.80 and the other <= 0.20.
+Strong disagreement result: combined score = 0.50.
 
-**Where it lives:** `scoring.py::combine_signals`
+**Where it lives:** 
+scoring.py::combine_signals (weights and disagreement thresholds in config.py).
+
 
 <!-- ⚠️ The grader checks your code against that line. If your rule lives
      somewhere else, say where. -->
 
 **A case where my two signals split, and what my rule does with it:**
-
+The clearly human-written text received a model score of 0.2340 and a style score of 0.6410. The difference between the signals was 0.4070.
+Because the scores did not meet the strong disagreement thresholds, the system used the weighted average and returned a combined score of 0.3561.
+This example shows that the style signal may assign a relatively high AI-related score to human writing, especially when the text is short.
 
 
 ---

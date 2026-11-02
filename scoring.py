@@ -53,10 +53,27 @@ def combine_signals(model_score: float, style_score: float) -> float:
     write a different rule.
     """
     # TODO: replace this
-    return (
+    
+    # Return an uncertain score when the signals strongly disagree.
+    strong_disagreement = (
+        (model_score >= config.DISAGREEMENT_HIGH
+         and style_score <= config.DISAGREEMENT_LOW)
+        or
+        (style_score >= config.DISAGREEMENT_HIGH
+         and model_score <= config.DISAGREEMENT_LOW)
+    )
+
+    if strong_disagreement:
+        return config.DISAGREEMENT_SCORE
+
+    # Otherwise, calculate the weighted average.
+    combined_score = (
         config.WEIGHT_MODEL_SIGNAL * model_score
         + config.WEIGHT_STYLE_SIGNAL * style_score
     )
+
+    return round(combined_score, 4)
+
 
 
 def score_to_label(score: float) -> tuple[str, str]:
