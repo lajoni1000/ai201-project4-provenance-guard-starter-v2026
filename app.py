@@ -213,26 +213,30 @@ def submit():
 
     style_score = stylometry.style_signal(text)
     combined_score = scoring.combine_signals(model_score, style_score)
-
+    guess, label = scoring.score_to_label(combined_score)
+    
     audit.log_decision(
         content_id=content_id,
         creator_id=creator_id,
-        guess="unsure",
+        guess=guess,
         model_score=model_score,
         style_score=style_score,
         combined_score=combined_score,
+        label=label,
         status="decided"
     )
    
+    
     return jsonify({
         "content_id": content_id,
-        "guess": "unsure",
-        "confidence": 0.5,
-        "label": "Temporary test result",
+        "guess": guess,
+        "confidence": combined_score,
+        "label": label,
         "model_score": model_score,
         "style_score": style_score,
         "combined_score": combined_score
     }), 200
+
 
 
 @app.post("/appeal")
@@ -255,16 +259,46 @@ def appeal():
     to the person on the other end. It's the only thing standing between a
     wrong accusation and nothing at all.
     """
+  
+    """
+    Receive an appeal, verify the content exists,
+    and record the request for review.
+    """
     payload = request.get_json(silent=True) or {}
-    text = payload.get("text")
-    creator_id = payload.get("creator_id")
-    # TODO: delete this and build the route.
-    return jsonify({
-        "error": "not_implemented",
-        "message": "POST /appeal isn't built yet — see the TODO in app.py.",
-        "you_sent": payload,
-    }), 501
 
+    content_id = payload.get("content_id")
+    reasoning = payload.get("reasoning")
+
+    # Validate the appeal request.
+    if not isinstance(content_id, str) or not content_id.strip():
+        return jsonify({"error": "A valid content_id is required."}), 400
+
+    if not isinstance(reasoning, str) or not reasoning.strip():
+        return jsonify({"error": "Please provide a reason for your appeal."}), 400
+
+    # Find the original decision.
+    entries = audit.entries_for(content_id)
+
+    original = next(
+        (entry for entry in entries if entry.get("status") == "decided"),
+        None
+    )
+
+    if original is None:
+        return jsonify({"error": "Content not found."}), 404
+
+    # Record the appeal without changing the original decision.
+    audit.log_appeal(
+        content_id=content_id,
+        creator_id=original["creator_id"],
+        reasoning=reasoning
+    )
+
+    return jsonify({
+        "content_id": content_id,
+        "status": "under_review",
+        "message": "Your appeal has been received and is awaiting review."
+    }), 200
 
 # ── Already works ─────────────────────────────────────────────────────────────
 

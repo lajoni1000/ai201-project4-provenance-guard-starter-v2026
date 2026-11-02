@@ -140,11 +140,14 @@ This example shows that the style signal may assign a relatively high AI-related
 
 | Label | Score range | The exact text a reader sees |
 |---|---|---|
-| high-confidence human |  |  |
-| unsure |  |  |
-| high-confidence AI |  |  |
+| high-confidence human | 0.00–0.35 | This text looks more like human writing. However, no automated tool can confirm authorship with certainty. |
+| unsure | Greater than 0.35 and less than 0.65 | We're not sure whether this text was written by a person or with AI. That's okay — writing styles vary, and this result doesn't mean you did anything wrong. |
+| high-confidence AI | 0.65–1.00 | This text has some patterns commonly found in AI-generated writing. This doesn't necessarily mean AI was used. If you wrote this yourself, you can request a review. |
 
 **Why I worded the "unsure" one this way:**
+
+I chose this wording because I want users to understand that an uncertain result is not an accusation. Writing styles vary, and the system cannot always distinguish between human and AI-generated text. The message should be clear, respectful, and reassuring, especially for people who wrote the text themselves.
+
 <!-- It's the hardest of the three. It has to admit uncertainty without
      sounding like an accusation, because the person reading it may well have
      written every word themselves. -->
@@ -165,23 +168,24 @@ This example shows that the style signal may assign a relatively high AI-related
 **Request (PowerShell):**
 
 ```powershell
-curl.exe --% -X POST http://127.0.0.1:5000/submit -H "Content-Type: application/json" -d "{\"text\":\"Artificial intelligence helps students learn and improve their skills every day.\",\"creator_id\":\"student001\"}"
+curl.exe --% -X POST http://127.0.0.1:5000/submit -H "Content-Type: application/json" -d "{\"text\":\"Artificial intelligence is transforming modern education by providing personalized learning experiences, improving access to educational resources, and supporting students in developing essential skills. Furthermore, AI-powered technologies enable educators to analyze learning patterns, identify areas for improvement, and implement effective instructional strategies. As these technologies continue to evolve, educational institutions must adopt responsible practices that promote transparency, fairness, and meaningful human oversight.\",\"creator_id\":\"ai_test003\"}"
 ```
 **Response:**
 ```json
 {
-  "confidence": 0.5,
-  "content_id": "a4493f17-dbd0-43ec-b798-400e0cce8481",
-  "guess": "unsure",
-  "label": "Temporary test result",
-  "model_score": 0.476,
-  "style_score": 0.0
+  "combined_score": 0.6847,
+  "confidence": 0.6847,
+  "content_id": "701fa94c-aa78-4b52-92ab-f0b3cea5b02e",
+  "guess": "ai",
+  "label": "This text has some patterns commonly found in AI-generated writing. This doesn't necessarily mean AI was used. If you wrote this yourself, you can request a review.",
+  "model_score": 0.7161,
+  "style_score": 0.6116
 }
 ```
 ### 2. Verify the audit log
 **Request:**
 ```powershell
-curl.exe -X GET http://127.0.0.1:5000/log
+curl.exe -X GET "http://127.0.0.1:5000/log?limit=1"
 ```
 **Response:**
 ```json
@@ -189,15 +193,15 @@ curl.exe -X GET http://127.0.0.1:5000/log
   "count": 1,
   "entries": [
     {
-      "combined_score": null,
-      "content_id": "a4493f17-dbd0-43ec-b798-400e0cce8481",
-      "creator_id": "student001",
-      "guess": "unsure",
-      "label": null,
-      "model_score": 0.476,
+      "combined_score": 0.6847,
+      "content_id": "701fa94c-aa78-4b52-92ab-f0b3cea5b02e",
+      "creator_id": "ai_test003",
+      "guess": "ai",
+      "label": "This text has some patterns commonly found in AI-generated writing. This doesn't necessarily mean AI was used. If you wrote this yourself, you can request a review.",
+      "model_score": 0.7161,
       "status": "decided",
-      "style_score": null,
-      "timestamp": "2026-11-02T03:00:39+00:00"
+      "style_score": 0.6116,
+      "timestamp": "2026-11-02T16:21:16+00:00"
     }
   ]
 }
@@ -214,25 +218,63 @@ curl.exe -X GET http://127.0.0.1:5000/log
 
 **An appeal**
 
-```bash
-$ curl -X POST http://127.0.0.1:5000/appeal \
-  -H "Content-Type: application/json" \
-  -d '{"content_id": "...", "reasoning": "..."}'
+**Request (PowerShell):**
+
+```powershell
+curl.exe --% -X POST http://127.0.0.1:5000/appeal -H "Content-Type: application/json" -d "{\"content_id\":\"d791908e-b3eb-4409-a0df-524f61d17cdc\",\"reasoning\":\"I wrote this text myself and would like to request a review of the AI classification.\"}"
 ```
 
-```json
+**Response:**
 
+```json
+{
+  "content_id": "d791908e-b3eb-4409-a0df-524f61d17cdc",
+  "message": "Your appeal has been received and is awaiting review.",
+  "status": "under_review"
+}
 ```
 
 **What the log shows afterwards**
 
-```bash
-$ curl "http://127.0.0.1:5000/log?limit=3"
+**Request (PowerShell):**
+
+```powershell
+curl.exe -X GET "http://127.0.0.1:5000/log?limit=10"
 ```
+
+**Original decision (excerpt):**
 
 ```json
-
+{
+  "combined_score": 0.6847,
+  "content_id": "d791908e-b3eb-4409-a0df-524f61d17cdc",
+  "creator_id": "ai_test001",
+  "guess": "ai",
+  "label": null,
+  "model_score": 0.7161,
+  "status": "decided",
+  "style_score": 0.6116,
+  "timestamp": "2026-11-02T16:03:41+00:00"
+}
 ```
+
+**Appeal entry (excerpt):**
+
+```json
+{
+  "content_id": "d791908e-b3eb-4409-a0df-524f61d17cdc",
+  "creator_id": "ai_test001",
+  "event": "appeal",
+  "reasoning": "I wrote this text myself and would like to request a review of the AI classification.",
+  "status": "under_review",
+  "timestamp": "2026-11-02T16:16:57+00:00"
+}
+```
+
+**Observation:**
+
+The appeal was successfully recorded with the status `under_review`. The original decision remained unchanged with the status `decided`. Both entries share the same `content_id`, making it possible to trace the appeal back to the original classification.
+This was a simulated appeal to verify the endpoint's functionality. It does not represent a confirmed false positive.
 
 ---
 
