@@ -141,7 +141,7 @@ This example shows that the style signal may assign a relatively high AI-related
 | Label | Score range | The exact text a reader sees |
 |---|---|---|
 | high-confidence human | 0.00–0.35 | This text looks more like human writing. However, no automated tool can confirm authorship with certainty. |
-| unsure | Greater than 0.35 and less than 0.65 | We're not sure whether this text was written by a person or with AI. That's okay — writing styles vary, and this result doesn't mean you did anything wrong. |
+| unsure | Greater than 0.35 and less than 0.65 | We couldn't determine whether this text was written by a person or with AI. Writing styles vary, and this result does not indicate that you did anything wrong. You do not need to change your writing based on this result. |
 | high-confidence AI | 0.65–1.00 | This text has some patterns commonly found in AI-generated writing. This doesn't necessarily mean AI was used. If you wrote this yourself, you can request a review. |
 
 **Why I worded the "unsure" one this way:**
@@ -287,10 +287,11 @@ This was a simulated appeal to verify the endpoint's functionality. It does not 
 - *What I changed:*
 
 **Moment 2**
+Evaluating the classification labels
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- What I asked for: I asked Claude to read my three classification labels from a writer's perspective and explain how each message might make someone feel and what they might do next.
+- What came back: Claude pointed out that the "unsure" label could confuse writers and encourage them to change their writing just to satisfy the detector. It also noted that the "AI" label might feel accusatory, even with a disclaimer.
+- What I changed: I revised the "unsure" message to communicate the system's uncertainty more clearly and reassure writers that they do not need to change their writing based on the result. I chose not to promise a review because the review process is not fully developed. I then tested the updated message and confirmed that all three classification ranges still worked correctly.
 
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 

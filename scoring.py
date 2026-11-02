@@ -120,8 +120,9 @@ def score_to_label(score: float) -> tuple[str, str]:
 
     return (
         "unsure",
-        "We're not sure whether this text was written by a person or with AI. "
-        "That's okay — writing styles vary, and this result doesn't mean you did anything wrong."
+        "We couldn't determine whether this text was written by a person or with AI. "
+        "Writing styles vary, and this result does not indicate that you did anything wrong. "
+        "You do not need to change your writing based on this result."
     )
 
     
