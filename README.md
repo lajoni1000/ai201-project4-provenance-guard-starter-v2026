@@ -148,20 +148,57 @@ Also, a person could modify AI-generated text by changing words or sentence stru
 
 **A submission**
 
+### 1. Submit content for analysis
+
+**Request (PowerShell):**
+
+```powershell
+curl.exe --% -X POST http://127.0.0.1:5000/submit -H "Content-Type: application/json" -d "{\"text\":\"Artificial intelligence helps students learn and improve their skills every day.\",\"creator_id\":\"student001\"}"
+```
+**Response:**
+```json
+{
+  "confidence": 0.5,
+  "content_id": "a4493f17-dbd0-43ec-b798-400e0cce8481",
+  "guess": "unsure",
+  "label": "Temporary test result",
+  "model_score": 0.476,
+  "style_score": 0.0
+}
+```
+### 2. Verify the audit log
+**Request:**
+```powershell
+curl.exe -X GET http://127.0.0.1:5000/log
+```
+**Response:**
+```json
+{
+  "count": 1,
+  "entries": [
+    {
+      "combined_score": null,
+      "content_id": "a4493f17-dbd0-43ec-b798-400e0cce8481",
+      "creator_id": "student001",
+      "guess": "unsure",
+      "label": null,
+      "model_score": 0.476,
+      "status": "decided",
+      "style_score": null,
+      "timestamp": "2026-11-02T03:00:39+00:00"
+    }
+  ]
+}
+```
+
+
+
 <!-- The response needs content_id, guess, confidence, label, AND both
      signal scores - model_score and style_score. Unit 8's tools read those
      two off the response, so leaving them out costs you next unit's
      diagnostics. -->
 
-```bash
-$ curl -X POST http://127.0.0.1:5000/submit \
-  -H "Content-Type: application/json" \
-  -d '{"text": "...", "creator_id": "..."}'
-```
 
-```json
-
-```
 
 **An appeal**
 
