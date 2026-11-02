@@ -281,10 +281,11 @@ This was a simulated appeal to verify the endpoint's functionality. It does not 
 ## How I Used AI
 
 **Moment 1**
+Implementing the signal combination rule
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- **What I asked for:** I asked Claude to help me implement my signal combination rule in Python, using the model score an
+- **What came back:** Claude provided coding guidance for implementing the weighted calculation and the condition for handling strong disagreements between the two signals.
+- **What I changed:** I reviewed and adapted the suggested code to implement my scoring rule in `scoring.py::combine_signals`. I kept the 70% model and 30% stylometry weights, along with the rule that returns 0.50 when the signals strongly disagree. I then tested the function to check that it behaved as expected.
 
 **Moment 2**
 Evaluating the classification labels
