@@ -42,62 +42,67 @@ Two things worth knowing before you pick numbers:
   a **miss**.
 
 ---
-## 1.
+## 1. False Positive Protection
 
 <!-- Your criterion. It must name a number. -->
+No more than 1 out of 10 verified human-written texts should receive a high-confidence AI label.
 
-
+Test: Submit 10 verified human-written texts to /submit, including formal writing and writing by non-native English speakers. Count how many receive the high-confidence AI label. The target must be met in each of the three evaluation trials.
 
 **Why this target:**
-
+I chose a maximum of 1 false positive out of 10 because falsely accusing someone of using AI can be more harmful than missing an AI-generated text. This is especially important for people whose writing style may be misinterpreted by the detection signals.
 
 
 ---
 
-## 2.
+## 2. AI-Generated Text Detection
 
 <!-- Your criterion. -->
+At least 8 out of 10 verified AI-generated texts should receive a high-confidence AI label.
 
-
+Test: Submit 10 AI-generated texts covering different topics and writing styles to /submit. Count how many receive the high-confidence AI label. The target must be met in each of the three evaluation trials.
 
 **Why this target:**
-
+ I chose 8 out of 10 because I want the system to identify most AI-generated texts while allowing for cases where the detection signals cannot confidently recognize them. Requiring 100% detection could encourage thresholds that increase false accusations.
 
 
 ---
 
-## 3.
+## 3. Signal Disagreement Handling
 
 <!-- Your criterion. -->
+All 10 predefined cases where the two signals strongly disagree should produce the unsure classification.
 
-
+Test: Create 10 pairs of model and style scores where one score is at least 0.80 and the other is at most 0.20. Pass each pair through the combining and label-mapping logic and verify that all 10 produce unsure. Repeat across three trials.
 
 **Why this target:**
-
+I chose 10 out of 10 because when the model and stylometry signals strongly disagree, the system should consistently return unsure. A confident classification in these situations could be misleading, especially when one signal produces a false positive.
 
 
 ---
 
-## 4.
+## 4. Appeal Process
 
 <!-- Your criterion. -->
+All 10 valid appeals should be recorded, assigned under_review, and linked to the correct submission without changing the original classification.
 
-
+Test: Submit 10 texts and save their content_id values. Submit an appeal for each one using /appeal with a reasoning message. Verify the appeal status, submission link, original classification, and audit log entry. Repeat across three trials.
 
 **Why this target:**
-
+I chose 10 out of 10 because every valid appeal should be recorded and linked to the correct submission. Missing even one appeal could prevent someone from challenging an incorrect classification.
 
 
 ---
 
-## 5.
+## 5. API Input Validation
 
 <!-- Your criterion. -->
+The system should correctly reject 10 out of 10 invalid requests without crashing or creating a classification.
 
-
+Test: Send 10 invalid requests to the /submit endpoint, including missing text, empty text, missing creator ID, and incorrect data types. Verify that each request returns HTTP 400 Bad Request with an error message. Repeat across three trials.
 
 **Why this target:**
-
+  I chose 10 out of 10 because invalid requests should not produce classifications. Validating the input helps prevent unreliable results and unnecessary processing by the detection signals.
 
 
 ---
