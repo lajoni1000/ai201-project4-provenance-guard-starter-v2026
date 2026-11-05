@@ -300,9 +300,15 @@ Evaluating the classification labels
 
 ## Rate Limiting
 
-**My limits:** ___ per minute, ___ per day
+**My limits:** 10 per minute, 200 per day
 
 **Why those numbers and not others:**
+I chose 10 requests per minute and 200 requests per day to balance usability and protection against automated abuse. A legitimate writer may need to submit multiple versions of a document, but is unlikely to require more than 10 submissions in a single minute.
+
+The daily limit allows repeated use while restricting the total number of requests from one caller. These limits do not completely prevent automated attacks, but they reduce the speed at which someone can test variations to identify weaknesses in the detector.
+
+For a production environment, I would review actual usage patterns and adjust the limits to balance security and usability.
+
 <!-- Think about two people: a real writer submitting their own work a few
      times an hour, and a script sending a thousand variations to map your
      thresholds. Your numbers have to be liveable for the first and hostile to
@@ -312,14 +318,25 @@ Evaluating the classification labels
 differently — one script can look like a thousand callers, and one household
 can look like one. -->
 
+The rate limiter uses `creator_id` to identify a caller when a valid, non-empty string is provided. If `creator_id` is missing or invalid, it falls back to the caller's IP address.
+This approach allows different creators sharing the same IP address to have separate rate limits. However, an attacker could potentially bypass the limit by submitting requests with different creator IDs, since the application does not authenticate those identifiers. The IP fallback also means that users without a valid creator ID who share the same network may share a rate limit.
+
+
 **The run of status codes when I pushed past it:**
 
 <!-- python run_attacks.py --flood 15 -->
 
 ```
+Command: python run_attacks.py --flood 15
+
+
+200 200 200 200 200 200 200 200 200 429 429 429 429 429 429
 
 ```
 
+Out of 15 requests, 9 were accepted (HTTP 200) and 6 were rejected (HTTP 429).
+
+This confirmed that rate limiting was enabled and successfully rejected excessive requests. The first rejection occurred on request 10, possibly because an earlier request was already counted in the current rate-limit window.
 ---
 
 ## Attack Run — Before
