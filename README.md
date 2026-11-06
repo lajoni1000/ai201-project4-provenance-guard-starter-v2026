@@ -731,7 +731,69 @@ These files contain the complete results of the three trials, including all 10 c
 
      Look for a pattern. Five failures on one signal is one problem, not five. -->
 
+I reviewed the failed acceptance criteria and the broken attacks to identify where the problems happened in the pipeline.
 
+**1. False Positive Protection — MISSED**
+
+**Stages:** Signal one, signal two, combining rule, and label mapping.
+
+Three human-written texts were classified as AI in each trial. Both signals gave relatively high scores to these texts. Since the combining rule gives 70% weight to the model signal and 30% to the style signal, their final scores exceeded the AI threshold of 0.65.
+
+The same problem appeared in attacks FP02–FP07. These included formal writing, technical documentation, and student writing. The system treated some characteristics of human writing as indicators of AI-generated text.
+
+**2. AI-Generated Text Detection — MISSED**
+
+**Stages:** Signal one, signal two, combining rule, and label mapping.
+
+Only two of the ten AI-generated texts were detected in each trial. Seven were classified as `unsure`, and one as `human`.
+
+The model and style signals sometimes produced scores that were too low to reach the AI threshold. This also explains attacks EV01–EV09.
+
+EV01 and EV08 received low model scores and were classified as `human`. EV02 and EV06 used changes in sentence structure that lowered their style scores. EV03, EV04, EV05, EV07, and EV09 produced combined scores below 0.65, so they were classified as `unsure`.
+
+The problem is that changes in writing style can affect the signals, and the final score does not always reflect the actual origin of the text.
+
+**3. Signal Disagreement Handling — MET**
+
+**Stage:** Combining rule.
+
+All ten test cases returned `unsure` in each trial. The combining rule correctly identified strong disagreement between the two signals and assigned a score of 0.50.
+
+**4. Appeal Process — MET**
+
+**Stage:** Route.
+
+All valid appeals were recorded correctly. The system linked each appeal to the original submission, returned `under_review`, and preserved the original decision.
+
+**5. API Input Validation — MISSED**
+
+**Stage:** Route (`app.py`, `submit()`).
+
+The route does not validate the JSON body, `text`, or `creator_id` before processing the submission.
+
+This caused several malformed attacks to fail:
+
+- MF01, MF03, and MF04: whitespace, control characters, and punctuation were accepted and classified as `human`.
+- MF02: a single character caused HTTP 500 because the detector could not score the text.
+- MF05–MF07: a long single word, emoji-only text, and right-to-left text were accepted and classified as `ai`.
+- RQ01, RQ03–RQ05, and RQ07–RQ12: missing fields, invalid data types, or malformed JSON caused HTTP 500 instead of a controlled error response.
+- RQ06: an object was accepted as `creator_id` and the request was classified with HTTP 200.
+
+For example, RQ07 caused an `AttributeError` because the route tried to use `.get()` on a JSON array. RQ01 passed a missing text value to the detector, which caused a `ValueError`.
+
+The common problem is that invalid input reaches the detector or other processing code before being validated.
+
+**6. Attacks That Held**
+
+The six prompt-injection attacks (PI01–PI06) did not show successful instruction manipulation. The application returned its normal classification messages.
+
+The flood test also showed that rate limiting was working. The first ten submissions returned HTTP 200, and requests 11 and 12 returned HTTP 429.
+
+**Common Pattern**
+
+The classification failures are related to overlapping scores between human and AI-generated writing. Changing the classification threshold alone could improve AI detection but increase false positives.
+
+The malformed-input failures have a clearer cause: missing validation in the `/submit` route.
 
 ---
 
