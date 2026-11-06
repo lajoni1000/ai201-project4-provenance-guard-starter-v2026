@@ -1,0 +1,1040 @@
+﻿[
+    {
+        "trial":  1,
+        "cases":  [
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "18ead943-69c8-403b-be11-c8c29ed3f859",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2328,
+                                                     "content_id":  "18ead943-69c8-403b-be11-c8c29ed3f859",
+                                                     "creator_id":  "appeal_trial_1_1",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0587,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6389,
+                                                     "timestamp":  "2026-11-06T03:33:36+00:00"
+                                                 }
+                                             ],
+                          "case":  1,
+                          "content_id":  "18ead943-69c8-403b-be11-c8c29ed3f859",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "18ead943-69c8-403b-be11-c8c29ed3f859",
+                                                   "creator_id":  "appeal_trial_1_1",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:36+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "ee5c9d49-04f4-48e0-9e29-11b6ae6a87ab",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2223,
+                                                     "content_id":  "ee5c9d49-04f4-48e0-9e29-11b6ae6a87ab",
+                                                     "creator_id":  "appeal_trial_1_2",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0557,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:36+00:00"
+                                                 }
+                                             ],
+                          "case":  2,
+                          "content_id":  "ee5c9d49-04f4-48e0-9e29-11b6ae6a87ab",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "ee5c9d49-04f4-48e0-9e29-11b6ae6a87ab",
+                                                   "creator_id":  "appeal_trial_1_2",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:36+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "e5524cce-8b94-4848-9663-b6fe0adca505",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2195,
+                                                     "content_id":  "e5524cce-8b94-4848-9663-b6fe0adca505",
+                                                     "creator_id":  "appeal_trial_1_3",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0517,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:36+00:00"
+                                                 }
+                                             ],
+                          "case":  3,
+                          "content_id":  "e5524cce-8b94-4848-9663-b6fe0adca505",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "e5524cce-8b94-4848-9663-b6fe0adca505",
+                                                   "creator_id":  "appeal_trial_1_3",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:36+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "f99db427-7029-40a7-be8f-b7e244651d7e",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.216,
+                                                     "content_id":  "f99db427-7029-40a7-be8f-b7e244651d7e",
+                                                     "creator_id":  "appeal_trial_1_4",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0467,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:36+00:00"
+                                                 }
+                                             ],
+                          "case":  4,
+                          "content_id":  "f99db427-7029-40a7-be8f-b7e244651d7e",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "f99db427-7029-40a7-be8f-b7e244651d7e",
+                                                   "creator_id":  "appeal_trial_1_4",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:36+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "d778ff9c-8014-4f9c-864d-b74ca6e92acf",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2131,
+                                                     "content_id":  "d778ff9c-8014-4f9c-864d-b74ca6e92acf",
+                                                     "creator_id":  "appeal_trial_1_5",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0426,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:37+00:00"
+                                                 }
+                                             ],
+                          "case":  5,
+                          "content_id":  "d778ff9c-8014-4f9c-864d-b74ca6e92acf",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "d778ff9c-8014-4f9c-864d-b74ca6e92acf",
+                                                   "creator_id":  "appeal_trial_1_5",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:37+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "95cbdf98-3006-4a11-b946-58cdef049c11",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2129,
+                                                     "content_id":  "95cbdf98-3006-4a11-b946-58cdef049c11",
+                                                     "creator_id":  "appeal_trial_1_6",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0423,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:37+00:00"
+                                                 }
+                                             ],
+                          "case":  6,
+                          "content_id":  "95cbdf98-3006-4a11-b946-58cdef049c11",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "95cbdf98-3006-4a11-b946-58cdef049c11",
+                                                   "creator_id":  "appeal_trial_1_6",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:37+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "77ce96b3-6f00-4772-a267-c8eb7dc95bc7",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2128,
+                                                     "content_id":  "77ce96b3-6f00-4772-a267-c8eb7dc95bc7",
+                                                     "creator_id":  "appeal_trial_1_7",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0421,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:37+00:00"
+                                                 }
+                                             ],
+                          "case":  7,
+                          "content_id":  "77ce96b3-6f00-4772-a267-c8eb7dc95bc7",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "77ce96b3-6f00-4772-a267-c8eb7dc95bc7",
+                                                   "creator_id":  "appeal_trial_1_7",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:37+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "3f64603f-f37f-4681-bfa9-932eb4541998",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2101,
+                                                     "content_id":  "3f64603f-f37f-4681-bfa9-932eb4541998",
+                                                     "creator_id":  "appeal_trial_1_8",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0383,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:37+00:00"
+                                                 }
+                                             ],
+                          "case":  8,
+                          "content_id":  "3f64603f-f37f-4681-bfa9-932eb4541998",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "3f64603f-f37f-4681-bfa9-932eb4541998",
+                                                   "creator_id":  "appeal_trial_1_8",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:37+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "8002c271-c202-43bb-8eb6-2bdfec102bf7",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2085,
+                                                     "content_id":  "8002c271-c202-43bb-8eb6-2bdfec102bf7",
+                                                     "creator_id":  "appeal_trial_1_9",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.036,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:37+00:00"
+                                                 }
+                                             ],
+                          "case":  9,
+                          "content_id":  "8002c271-c202-43bb-8eb6-2bdfec102bf7",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "8002c271-c202-43bb-8eb6-2bdfec102bf7",
+                                                   "creator_id":  "appeal_trial_1_9",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:37+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "2c892e03-2abd-48f3-bd45-9f6d265a5f48",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2103,
+                                                     "content_id":  "2c892e03-2abd-48f3-bd45-9f6d265a5f48",
+                                                     "creator_id":  "appeal_trial_1_10",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0385,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:37+00:00"
+                                                 }
+                                             ],
+                          "case":  10,
+                          "content_id":  "2c892e03-2abd-48f3-bd45-9f6d265a5f48",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "2c892e03-2abd-48f3-bd45-9f6d265a5f48",
+                                                   "creator_id":  "appeal_trial_1_10",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:37+00:00"
+                                               }
+                                           ]
+                      }
+                  ],
+        "passed":  10
+    },
+    {
+        "trial":  2,
+        "cases":  [
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "0af9afcd-e25d-4941-b2de-57b94f8d5aae",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2209,
+                                                     "content_id":  "0af9afcd-e25d-4941-b2de-57b94f8d5aae",
+                                                     "creator_id":  "appeal_trial_2_1",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0537,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:37+00:00"
+                                                 }
+                                             ],
+                          "case":  1,
+                          "content_id":  "0af9afcd-e25d-4941-b2de-57b94f8d5aae",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "0af9afcd-e25d-4941-b2de-57b94f8d5aae",
+                                                   "creator_id":  "appeal_trial_2_1",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:37+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "f625f240-2028-47de-8a96-92e2b14b833b",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2262,
+                                                     "content_id":  "f625f240-2028-47de-8a96-92e2b14b833b",
+                                                     "creator_id":  "appeal_trial_2_2",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0493,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6389,
+                                                     "timestamp":  "2026-11-06T03:33:37+00:00"
+                                                 }
+                                             ],
+                          "case":  2,
+                          "content_id":  "f625f240-2028-47de-8a96-92e2b14b833b",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "f625f240-2028-47de-8a96-92e2b14b833b",
+                                                   "creator_id":  "appeal_trial_2_2",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:38+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "65f3f081-bf19-4162-838a-163e360eb715",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2184,
+                                                     "content_id":  "65f3f081-bf19-4162-838a-163e360eb715",
+                                                     "creator_id":  "appeal_trial_2_3",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0501,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:38+00:00"
+                                                 }
+                                             ],
+                          "case":  3,
+                          "content_id":  "65f3f081-bf19-4162-838a-163e360eb715",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "65f3f081-bf19-4162-838a-163e360eb715",
+                                                   "creator_id":  "appeal_trial_2_3",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:38+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "89a86506-23d8-4447-877b-f1d539f4032e",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2149,
+                                                     "content_id":  "89a86506-23d8-4447-877b-f1d539f4032e",
+                                                     "creator_id":  "appeal_trial_2_4",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0451,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:38+00:00"
+                                                 }
+                                             ],
+                          "case":  4,
+                          "content_id":  "89a86506-23d8-4447-877b-f1d539f4032e",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "89a86506-23d8-4447-877b-f1d539f4032e",
+                                                   "creator_id":  "appeal_trial_2_4",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:38+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "14f4cb1a-2400-4e3f-a28c-77eca34c1952",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2115,
+                                                     "content_id":  "14f4cb1a-2400-4e3f-a28c-77eca34c1952",
+                                                     "creator_id":  "appeal_trial_2_5",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0403,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:38+00:00"
+                                                 }
+                                             ],
+                          "case":  5,
+                          "content_id":  "14f4cb1a-2400-4e3f-a28c-77eca34c1952",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "14f4cb1a-2400-4e3f-a28c-77eca34c1952",
+                                                   "creator_id":  "appeal_trial_2_5",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:38+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "a96d9cc0-6b49-4103-9d64-4dfa3abd2ae9",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.211,
+                                                     "content_id":  "a96d9cc0-6b49-4103-9d64-4dfa3abd2ae9",
+                                                     "creator_id":  "appeal_trial_2_6",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0395,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:38+00:00"
+                                                 }
+                                             ],
+                          "case":  6,
+                          "content_id":  "a96d9cc0-6b49-4103-9d64-4dfa3abd2ae9",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "a96d9cc0-6b49-4103-9d64-4dfa3abd2ae9",
+                                                   "creator_id":  "appeal_trial_2_6",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:38+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "abc5a822-2277-4b83-934e-d40433cc592e",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2113,
+                                                     "content_id":  "abc5a822-2277-4b83-934e-d40433cc592e",
+                                                     "creator_id":  "appeal_trial_2_7",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0399,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:38+00:00"
+                                                 }
+                                             ],
+                          "case":  7,
+                          "content_id":  "abc5a822-2277-4b83-934e-d40433cc592e",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "abc5a822-2277-4b83-934e-d40433cc592e",
+                                                   "creator_id":  "appeal_trial_2_7",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:38+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "b2d2fe84-af1d-4def-98e1-e0d4c8442206",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2074,
+                                                     "content_id":  "b2d2fe84-af1d-4def-98e1-e0d4c8442206",
+                                                     "creator_id":  "appeal_trial_2_8",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0344,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:38+00:00"
+                                                 }
+                                             ],
+                          "case":  8,
+                          "content_id":  "b2d2fe84-af1d-4def-98e1-e0d4c8442206",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "b2d2fe84-af1d-4def-98e1-e0d4c8442206",
+                                                   "creator_id":  "appeal_trial_2_8",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:38+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "bf5413b6-90ac-4216-8892-4982c56f87c0",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2068,
+                                                     "content_id":  "bf5413b6-90ac-4216-8892-4982c56f87c0",
+                                                     "creator_id":  "appeal_trial_2_9",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0335,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:38+00:00"
+                                                 }
+                                             ],
+                          "case":  9,
+                          "content_id":  "bf5413b6-90ac-4216-8892-4982c56f87c0",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "bf5413b6-90ac-4216-8892-4982c56f87c0",
+                                                   "creator_id":  "appeal_trial_2_9",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:38+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "65567651-3511-499e-ac55-d6408227b9e8",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2073,
+                                                     "content_id":  "65567651-3511-499e-ac55-d6408227b9e8",
+                                                     "creator_id":  "appeal_trial_2_10",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0343,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:39+00:00"
+                                                 }
+                                             ],
+                          "case":  10,
+                          "content_id":  "65567651-3511-499e-ac55-d6408227b9e8",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "65567651-3511-499e-ac55-d6408227b9e8",
+                                                   "creator_id":  "appeal_trial_2_10",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:39+00:00"
+                                               }
+                                           ]
+                      }
+                  ],
+        "passed":  10
+    },
+    {
+        "trial":  3,
+        "cases":  [
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "cf6f2157-ee6b-498c-8a39-ca05e630695c",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2178,
+                                                     "content_id":  "cf6f2157-ee6b-498c-8a39-ca05e630695c",
+                                                     "creator_id":  "appeal_trial_3_1",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0493,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:39+00:00"
+                                                 }
+                                             ],
+                          "case":  1,
+                          "content_id":  "cf6f2157-ee6b-498c-8a39-ca05e630695c",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "cf6f2157-ee6b-498c-8a39-ca05e630695c",
+                                                   "creator_id":  "appeal_trial_3_1",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:39+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "5ad8511e-80af-4401-98e7-80c4c57f6857",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2151,
+                                                     "content_id":  "5ad8511e-80af-4401-98e7-80c4c57f6857",
+                                                     "creator_id":  "appeal_trial_3_2",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0454,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:39+00:00"
+                                                 }
+                                             ],
+                          "case":  2,
+                          "content_id":  "5ad8511e-80af-4401-98e7-80c4c57f6857",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "5ad8511e-80af-4401-98e7-80c4c57f6857",
+                                                   "creator_id":  "appeal_trial_3_2",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:39+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "e3cb9876-6d9a-475b-987f-cec82b477648",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2237,
+                                                     "content_id":  "e3cb9876-6d9a-475b-987f-cec82b477648",
+                                                     "creator_id":  "appeal_trial_3_3",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0457,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6389,
+                                                     "timestamp":  "2026-11-06T03:33:39+00:00"
+                                                 }
+                                             ],
+                          "case":  3,
+                          "content_id":  "e3cb9876-6d9a-475b-987f-cec82b477648",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "e3cb9876-6d9a-475b-987f-cec82b477648",
+                                                   "creator_id":  "appeal_trial_3_3",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:39+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "29559454-037d-440a-aafc-f11263030b08",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2143,
+                                                     "content_id":  "29559454-037d-440a-aafc-f11263030b08",
+                                                     "creator_id":  "appeal_trial_3_4",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0443,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:39+00:00"
+                                                 }
+                                             ],
+                          "case":  4,
+                          "content_id":  "29559454-037d-440a-aafc-f11263030b08",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "29559454-037d-440a-aafc-f11263030b08",
+                                                   "creator_id":  "appeal_trial_3_4",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:39+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "4b1dbb16-b6fc-4913-a81b-1b6ab63c462f",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.211,
+                                                     "content_id":  "4b1dbb16-b6fc-4913-a81b-1b6ab63c462f",
+                                                     "creator_id":  "appeal_trial_3_5",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0395,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:39+00:00"
+                                                 }
+                                             ],
+                          "case":  5,
+                          "content_id":  "4b1dbb16-b6fc-4913-a81b-1b6ab63c462f",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "4b1dbb16-b6fc-4913-a81b-1b6ab63c462f",
+                                                   "creator_id":  "appeal_trial_3_5",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:39+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "079b756c-8dce-41a1-ae48-2ae05afe31cc",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2109,
+                                                     "content_id":  "079b756c-8dce-41a1-ae48-2ae05afe31cc",
+                                                     "creator_id":  "appeal_trial_3_6",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0394,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:39+00:00"
+                                                 }
+                                             ],
+                          "case":  6,
+                          "content_id":  "079b756c-8dce-41a1-ae48-2ae05afe31cc",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "079b756c-8dce-41a1-ae48-2ae05afe31cc",
+                                                   "creator_id":  "appeal_trial_3_6",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:39+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "2d63200f-f6f9-413d-a1e7-3a6becb3a1eb",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2102,
+                                                     "content_id":  "2d63200f-f6f9-413d-a1e7-3a6becb3a1eb",
+                                                     "creator_id":  "appeal_trial_3_7",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0384,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:39+00:00"
+                                                 }
+                                             ],
+                          "case":  7,
+                          "content_id":  "2d63200f-f6f9-413d-a1e7-3a6becb3a1eb",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "2d63200f-f6f9-413d-a1e7-3a6becb3a1eb",
+                                                   "creator_id":  "appeal_trial_3_7",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:40+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "772461d9-0a53-4af5-b7e1-17dff714f0b6",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2078,
+                                                     "content_id":  "772461d9-0a53-4af5-b7e1-17dff714f0b6",
+                                                     "creator_id":  "appeal_trial_3_8",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.035,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:40+00:00"
+                                                 }
+                                             ],
+                          "case":  8,
+                          "content_id":  "772461d9-0a53-4af5-b7e1-17dff714f0b6",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "772461d9-0a53-4af5-b7e1-17dff714f0b6",
+                                                   "creator_id":  "appeal_trial_3_8",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:40+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "23e46da8-f676-4c53-8cf7-45b1d55ce453",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2054,
+                                                     "content_id":  "23e46da8-f676-4c53-8cf7-45b1d55ce453",
+                                                     "creator_id":  "appeal_trial_3_9",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0315,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:40+00:00"
+                                                 }
+                                             ],
+                          "case":  9,
+                          "content_id":  "23e46da8-f676-4c53-8cf7-45b1d55ce453",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "23e46da8-f676-4c53-8cf7-45b1d55ce453",
+                                                   "creator_id":  "appeal_trial_3_9",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:40+00:00"
+                                               }
+                                           ]
+                      },
+                      {
+                          "appeal_response":  {
+                                                  "content_id":  "2537e936-3b7d-49c2-98c5-221490cd9076",
+                                                  "message":  "Your appeal has been received and is awaiting review.",
+                                                  "status":  "under_review"
+                                              },
+                          "passed":  true,
+                          "original_guess":  "human",
+                          "original_audit":  [
+                                                 {
+                                                     "combined_score":  0.2068,
+                                                     "content_id":  "2537e936-3b7d-49c2-98c5-221490cd9076",
+                                                     "creator_id":  "appeal_trial_3_10",
+                                                     "guess":  "human",
+                                                     "label":  "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+                                                     "model_score":  0.0335,
+                                                     "status":  "decided",
+                                                     "style_score":  0.6111,
+                                                     "timestamp":  "2026-11-06T03:33:40+00:00"
+                                                 }
+                                             ],
+                          "case":  10,
+                          "content_id":  "2537e936-3b7d-49c2-98c5-221490cd9076",
+                          "appeal_audit":  [
+                                               {
+                                                   "content_id":  "2537e936-3b7d-49c2-98c5-221490cd9076",
+                                                   "creator_id":  "appeal_trial_3_10",
+                                                   "event":  "appeal",
+                                                   "reasoning":  "I request a manual review of this classification.",
+                                                   "status":  "under_review",
+                                                   "timestamp":  "2026-11-06T03:33:40+00:00"
+                                               }
+                                           ]
+                      }
+                  ],
+        "passed":  10
+    }
+]

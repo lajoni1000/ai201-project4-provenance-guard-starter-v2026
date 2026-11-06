@@ -545,18 +545,175 @@ I consider this the most concerning result because a student could be unfairly q
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. False Positive Protection | ≤1/10 high-confidence AI labels | 3/10 | 3/10 | 3/10 | MISSED |
+| 2. AI-Generated Text Detection | ≥8/10 high-confidence AI labels | 2/10 | 2/10 | 2/10 | MISSED |
+| 3. Signal Disagreement Handling | 10/10 labeled unsure | 10/10 | 10/10 | 10/10 | MET |
+| 4. Appeal Process | 10/10 valid appeals recorded correctly | 10/10 | 10/10 | 10/10 | MET |
+| 5. API Input Validation | 10/10 invalid requests return HTTP 400 | 0/10 confirmed | 0/10 confirmed | 0/10 confirmed | MISSED |
+
+Criterion 4 Testing Method: The Appeal Process was tested through direct API requests using PowerShell. Each trial included 10 valid appeals. The tests verified that each appeal returned `under_review`, was linked to the correct `content_id`, preserved the original classification, and created an audit log entry.
+Evidence:`results/appeal_criterion4_20261105_223340.json`
 
 **Real output from one trial**, pasted as text, naming the file and function
 that produced it:
 
-```json
 
+## Real Output from One Trial — Milestone 3
+
+All five acceptance criteria were evaluated three times using 10 test cases per trial. The JSON examples below come from Trial 1. The complete trial outputs are preserved in the `results` directory.
+
+### Criterion 1 — False Positive Protection (MISSED)
+
+**File:** `results/run_2026-11-05_2228_before_complete.md`
+
+**Functions:** `run_eval.py::main()` and `app.py::submit()`
+
+**Actual JSON — Trial 1, case 1:**
+
+```json
+{
+  "status": 200,
+  "guess": "ai",
+  "confidence": 0.6632,
+  "model_score": 0.7211,
+  "style_score": 0.5281,
+  "label": "This text has some patterns commonly found in AI-generated writing. This doesn't necessarily mean AI was used. If you wrote this yourself, you can request a review.",
+  "sent": "When I was a teenager, I learned programming. That was a long time ago"
+}
 ```
+
+Three out of 10 verified human-written texts received an AI label in each trial. The target was no more than one.
+
+### Criterion 2 — AI-Generated Text Detection (MISSED)
+
+**File:** `results/run_2026-11-05_2228_before_complete.md`
+
+**Functions:** `run_eval.py::main()` and `app.py::submit()`
+
+**Actual JSON — Trial 1, case 3:**
+
+```json
+{
+  "status": 200,
+  "guess": "ai",
+  "confidence": 0.6649,
+  "model_score": 0.7144,
+  "style_score": 0.5494,
+  "label": "This text has some patterns commonly found in AI-generated writing. This doesn't necessarily mean AI was used. If you wrote this yourself, you can request a review.",
+  "sent": "Urban green spaces provide environmental, social, and public health be"
+}
+```
+
+Only two out of 10 verified AI-generated texts received an AI label in each trial. The target was at least eight.
+
+### Criterion 3 — Signal Disagreement Handling (MET)
+
+**File:** `results/run_2026-11-05_2228_before_complete.md`
+
+**Functions:** `run_eval.py::test_signal_disagreement()`, `scoring.py::combine_signals()`, and `scoring.py::score_to_label()`
+
+**Actual JSON — Trial 1, case 1:**
+
+```json
+{
+  "model_score": 0.9,
+  "style_score": 0.1,
+  "combined_score": 0.5,
+  "guess": "unsure",
+  "label": "We couldn't determine whether this text was written by a person or with AI. Writing styles vary, and this result does not indicate that you did anything wrong. You do not need to change your writing based on this result."
+}
+```
+
+All 10 predetermined signal pairs returned `unsure` in all three trials.
+
+### Criterion 4 — Appeal Process (MET)
+
+**File:** `results/appeal_criterion4_20261105_223340.json`
+
+**Functions:** `app.py::submit()` and `app.py::appeal()`
+
+**Testing method:** Direct API requests using PowerShell, followed by audit log verification.
+
+**Actual JSON — Trial 1, case 1:**
+
+```json
+{
+  "appeal_response": {
+    "content_id": "18ead943-69c8-403b-be11-c8c29ed3f859",
+    "message": "Your appeal has been received and is awaiting review.",
+    "status": "under_review"
+  },
+  "passed": true,
+  "original_guess": "human",
+  "original_audit": [
+    {
+      "combined_score": 0.2328,
+      "content_id": "18ead943-69c8-403b-be11-c8c29ed3f859",
+      "creator_id": "appeal_trial_1_1",
+      "guess": "human",
+      "label": "This text looks more like human writing. However, no automated tool can confirm authorship with certainty.",
+      "model_score": 0.0587,
+      "status": "decided",
+      "style_score": 0.6389,
+      "timestamp": "2026-11-06T03:33:36+00:00"
+    }
+  ],
+  "case": 1,
+  "content_id": "18ead943-69c8-403b-be11-c8c29ed3f859",
+  "appeal_audit": [
+    {
+      "content_id": "18ead943-69c8-403b-be11-c8c29ed3f859",
+      "creator_id": "appeal_trial_1_1",
+      "event": "appeal",
+      "reasoning": "I request a manual review of this classification.",
+      "status": "under_review",
+      "timestamp": "2026-11-06T03:33:36+00:00"
+    }
+  ]
+}
+```
+
+All 10 appeals passed in each of the three trials. The original classification remained unchanged, each appeal was correctly linked to its `content_id`, and the audit log recorded the appeal.
+
+### Criterion 5 — API Input Validation (MISSED)
+
+**File:** `results/run_2026-11-05_2228_before_complete.md`
+
+**Functions:** `run_eval.py::main()` and `app.py::submit()`
+
+**Actual JSON — Trial 1, cases 1 and 8:**
+
+```json
+[
+  {
+    "status": null,
+    "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+    "sent": "(empty text)"
+  },
+  {
+    "status": 200,
+    "guess": "ai",
+    "confidence": 0.7098,
+    "model_score": 0.7997,
+    "style_score": 0.5,
+    "label": "This text has some patterns commonly found in AI-generated writing. This doesn't necessarily mean AI was used. If you wrote this yourself, you can request a review.",
+    "sent": "   "
+  }
+]
+```
+
+The API did not consistently reject invalid input. Seven cases generated JSON parsing errors, while three returned HTTP 200 classifications. The expected behavior was HTTP 400 with an error message and no classification for all 10 invalid requests.
+
+The actual HTTP status codes for the seven parsing errors were not captured by the evaluation script.
+
+### Complete Evaluation Evidence
+
+- Criteria 1, 2, 3, and 5: `results/run_2026-11-05_2228_before_complete.md`
+- Criterion 4: `results/appeal_criterion4_20261105_223340.json`
+
+These files contain the complete results of the three trials, including all 10 cases per criterion.
+
+
 
 **Diagnoses**
 

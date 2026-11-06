@@ -65,6 +65,50 @@ def describe(body):
         return text[:70] if text else "(empty text)"
     return json.dumps(body)[:120]
 
+def test_signal_disagreement(trials_count):
+    """
+    Test Criterion 3: Signal Disagreement Handling.
+    Check that strongly conflicting signals return 'unsure'.
+    """
+    import scoring
+    # Ten predefined pairs with strongly conflicting scores.
+    pairs = [
+        (0.90, 0.10), (0.85, 0.15), (0.80, 0.20),
+        (0.95, 0.05), (1.00, 0.00),
+        (0.10, 0.90), (0.15, 0.85), (0.20, 0.80),
+        (0.05, 0.95), (0.00, 1.00),
+    ]
+
+    trials = []
+    # Repeat the same ten tests three times without changing inputs.
+    for trial in range(1, trials_count + 1):
+        results = []
+        # Use the project's actual scoring and labeling functions.
+        for model, style in pairs:
+            combined = scoring.combine_signals(model, style)
+            guess, label = scoring.score_to_label(combined)
+
+            results.append({
+                "model_score": model,
+                "style_score": style,
+                "combined_score": combined,
+                "guess": guess,
+                "label": label
+            })
+        # Count how many results match the expected 'unsure' label.
+        passed = sum(r["guess"] == "unsure" for r in results)
+        print(f"  trial {trial}: {passed}/10 unsure")
+        trials.append(results)
+
+    # Return results in the format used by the evaluation report.
+    return {
+        "scenario": {
+            "criterion": 3,
+            "name": "Signal Disagreement Handling"
+        },
+        "trials": trials
+    }
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
@@ -137,6 +181,13 @@ def main():
             print(f"  trial {trial}: {', '.join(guesses)}")
 
         rows.append({"scenario": scenario, "trials": trials})
+
+    # Run Criterion 3 separately because it requires predefined signal scores.
+    print("\nSignal Disagreement Handling  (criterion 3)")
+    rows.append(test_signal_disagreement(args.trials))
+
+    # Keep the criteria in numerical order in the report.
+    rows.sort(key=lambda row: row["scenario"].get("criterion", 0))
 
     write_report(rows, args)
 
