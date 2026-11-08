@@ -294,6 +294,12 @@ Evaluating the classification labels
 - What came back: Claude pointed out that the "unsure" label could confuse writers and encourage them to change their writing just to satisfy the detector. It also noted that the "AI" label might feel accusatory, even with a disclaimer.
 - What I changed: I revised the "unsure" message to communicate the system's uncertainty more clearly and reassure writers that they do not need to change their writing based on the result. I chose not to promise a review because the review process is not fully developed. I then tested the updated message and confirmed that all three classification ranges still worked correctly.
 
+**Moment 3**
+Implementing input validation for Unit 8
+- What I asked for: I provided ChatGPT the goal of the project and explained the input validation problem I had identified during testing. I asked for help writing the Python code to improve the `/submit` route.
+- What came back: ChatGPT suggested code to validate the JSON request body, check the `text` and `creator_id` fields, and return HTTP 400 for invalid requests.
+- What I changed: I reviewed the suggested code and added the validation to `app.py`. Then I ran the attack set and my five evaluation criteria again to verify whether the improvement worked. The results showed that Criterion 5 improved from MISSED to MET.
+
 <!-- ═══════════════════════ UNIT 8 — THE TEST ═══════════════════════ -->
 
 ---
@@ -385,9 +391,9 @@ results/attack_run_2026-11-04_2007.md
 | MF05 | malformed | text is a very long single word | 200 | `e3dbf7da-1a25-47ab-af46-e8e609eb304d` | ai | 0.898 | BROKE |
 | MF06 | malformed | text is emoji only | 200 | `3993d90d-6ea5-43b3-94b0-48efdf943840` | ai | 0.848 | BROKE |
 | MF07 | malformed | text is right-to-left script | 200 | `c2e53862-413f-4e45-830a-a9e02076b2aa` | ai | 0.784 | BROKE |
-| MF08 | malformed | text is 60,000 characters | 200 | `7678f746-083e-412f-b983-7f8c2f963b53` | ai | 0.938 | HELD |
+| MF08 | malformed | text is 60,000 characters | 200 | `7678f746-083e-412f-b983-7f8c2f963b53` | ai | 0.938 | BROKE |
 | RQ01 | malformed | no text field at all | 500 | `—` | — | — | BROKE |
-| RQ02 | malformed | no creator_id | 200 | `d12d8009-4efd-4bbe-8112-9beb82c32b37` | unsure | 0.359 | HELD |
+| RQ02 | malformed | no creator_id | 200 | `d12d8009-4efd-4bbe-8112-9beb82c32b37` | unsure | 0.359 | BROKE |
 | RQ03 | malformed | text is a number | 500 | `—` | — | — | BROKE |
 | RQ04 | malformed | text is a list | 500 | `—` | — | — | BROKE |
 | RQ05 | malformed | text is null | 500 | `—` | — | — | BROKE |
@@ -800,21 +806,99 @@ The malformed-input failures have a clearer cause: missing validation in the `/s
 ## The Improvement
 
 **What I changed:**
+I added input validation to the /submit route in app.py, before sending the text to the detector.
+The route now checks that the request body is a JSON object, that text is a string between 20 and 10,000 characters, and that creator_id is a non-empty string.
+Invalid requests now return HTTP 400 with an error message instead of being classified or causing an internal server error.
 
 **Which diagnosis pointed at it:**
+In Milestone 4, I found that the /submit route was processing requests without validating the input first.
+For example, RQ07 sent a JSON array instead of an object and caused an AttributeError because the route tried to use .get() on a list. Other requests, such as RQ01, caused server errors when required fields were missing.
+
+This showed that the problem was in the route, before the detector was called.
+
 
 ### Attack Run — After
 
 <!-- Same format. `run_attacks.py --label after` -->
+| ID | Family | Targeting | Status | Content ID | Guess | Score | Verdict |
+|---|---|---|---|---|---|---|---|
+| EV01 | evasion | signal two: typos raise word variety | 200 | `121d6eaf-2565-4499-a07e-87298177f645` | human | 0.299 | BROKE |
+| EV02 | evasion | signal two: broken-up sentences raise length spread | 200 | `dd9cbcd3-3d58-4213-a8d8-1fc3311bcb02` | unsure | 0.534 | BROKE |
+| EV03 | evasion | signal two: a pasted quotation changes the shape | 200 | `86258edd-8e4b-418a-91b0-d2dd39887971` | unsure | 0.624 | BROKE |
+| EV04 | evasion | signal one: unusual words raise perplexity | 200 | `89c88e84-9ed6-4695-ae69-444fa05cf045` | unsure | 0.612 | BROKE |
+| EV05 | evasion | both signals: heavy human editing pass | 200 | `35f6ad6d-a07f-408f-86cc-95ad5c2eb7a6` | unsure | 0.367 | BROKE |
+| EV06 | evasion | signal two: one very long sentence and one very short | 200 | `a95ee033-a699-4187-bc39-013bf4451129` | unsure | 0.517 | BROKE |
+| EV07 | evasion | signal two: padding with punctuation | 200 | `13797c58-b2d4-4271-b8ff-dda70544b61e` | unsure | 0.611 | BROKE |
+| EV08 | evasion | signal one: text below the token window | 200 | `891bede6-a479-4c88-b9b3-a0c6d3b20c2a` | human | 0.323 | BROKE |
+| EV09 | evasion | both: AI text with a human opening paragraph bolted on | 200 | `70b76af2-a17a-4d2b-80a4-4b9839eb2795` | unsure | 0.649 | BROKE |
+| EV10 | evasion | signal two: repeated stanza structure | 200 | `0fe00934-a0f8-45f6-a351-0e231655076c` | ai | 0.910 | HELD |
+| FP01 | false_positive | plain, clear human writing with no flourishes | 200 | `ef059010-5d96-4d53-9bc2-8a3cbbda8021` | unsure | 0.606 | HELD |
+| FP02 | false_positive | human writing in a formal register | 200 | `3a06552e-d6c1-47f4-ba01-29d9df2c8405` | ai | 0.712 | BROKE |
+| FP03 | false_positive | a non-native English speaker writing carefully | 200 | `93d9f9e3-1c83-450e-81a8-94f10dab0e57` | ai | 0.750 | BROKE |
+| FP04 | false_positive | a student essay written to a rubric | 200 | `7fbb9b6f-d6ea-46e1-831a-18f8c239c33c` | ai | 0.752 | BROKE |
+| FP05 | false_positive | technical documentation written by a person | 200 | `d2f921e2-2aec-490c-bb5a-6cbe935ce92d` | ai | 0.761 | BROKE |
+| FP06 | false_positive | a person imitating a formal template | 200 | `bf86c644-0817-4d34-ab2a-69e1c6c83bbb` | ai | 0.781 | BROKE |
+| FP07 | false_positive | human writing that repeats a phrase deliberately | 200 | `17163735-4144-4141-bfbf-9766418dedd0` | ai | 0.783 | BROKE |
+| FP08 | false_positive | very short genuine human submission | 200 | `e065e598-215d-4593-bd36-9d57cf7f8513` | human | 0.345 | HELD |
+| PI01 | prompt_injection | instruction to ignore the check | 200 | `c09155cb-5b9b-41d4-a8a4-e20f4c84ccd8` | unsure | 0.453 | HELD |
+| PI02 | prompt_injection | instruction disguised as a system message | 200 | `ec94be90-5675-492e-8fc5-784b0b903616` | human | 0.265 | HELD |
+| PI03 | prompt_injection | instruction wrapped in the writer's voice | 200 | `b0bdb6c8-3c37-4657-925e-ab51c4bcd661` | unsure | 0.582 | HELD |
+| PI04 | prompt_injection | attempt to make the label text hostile | 200 | `0cc38e2a-edcd-40fb-8ff2-4ef7b58b3d6f` | unsure | 0.514 | HELD |
+| PI05 | prompt_injection | attempt to inject into the audit log | 200 | `e4c541c5-d4f8-4ae5-9dbf-22f9d123495c` | unsure | 0.574 | HELD |
+| PI06 | prompt_injection | instruction plus real human text | 200 | `b38841e0-718f-45dd-b4a5-05842023ea11` | unsure | 0.566 | HELD |
+| MF01 | malformed | text is only whitespace | 400 | `—` | — | — | HELD |
+| MF02 | malformed | text is a single character | 400 | `—` | — | — | HELD |
+| MF03 | malformed | text is control characters | 200 | `fc71a43d-fcef-4a6c-80bd-3ff18306d771` | human | 0.200 | BROKE |
+| MF04 | malformed | text is only punctuation | 200 | `a1605618-c274-47c3-a0da-87d48b4d8fc5` | human | 0.158 | BROKE |
+| MF05 | malformed | text is a very long single word | 200 | `13239abb-419c-4dd0-92ca-a40cd3cfbf41` | ai | 0.898 | BROKE |
+| MF06 | malformed | text is emoji only | 200 | `01312672-6ae8-4c0a-b52c-40848742eb02` | ai | 0.848 | BROKE |
+| MF07 | malformed | text is right-to-left script | 200 | `592a3f72-c552-404c-915e-7f301edf30e6` | ai | 0.784 | BROKE |
+| MF08 | malformed | text is 60,000 characters | 400 | `—` | — | — | HELD |
+| RQ01 | malformed | no text field at all | 400 | `—` | — | — | HELD |
+| RQ02 | malformed | no creator_id | 400 | `—` | — | — | HELD |
+| RQ03 | malformed | text is a number | 400 | `—` | — | — | HELD |
+| RQ04 | malformed | text is a list | 400 | `—` | — | — | HELD |
+| RQ05 | malformed | text is null | 400 | `—` | — | — | HELD |
+| RQ06 | malformed | creator_id is an object | 400 | `—` | — | — | HELD |
+| RQ07 | malformed | body is a JSON array, not an object | 400 | `—` | — | — | HELD |
+| RQ08 | malformed | body is unparseable JSON | 400 | `—` | — | — | HELD |
+| RQ09 | malformed | body is empty | 400 | `—` | — | — | HELD |
+| RQ10 | malformed | body is form-encoded, not JSON | 400 | `—` | — | — | HELD |
+| RQ11 | malformed | body is JSON claiming to be plain text | 400 | `—` | — | — | HELD |
+| RQ12 | malformed | deeply nested JSON | 400 | `—` | — | — | HELD |
+| FL01_01 | flood_same_creator | 20 rapid submissions from one creator | 200 | `936e9660-174b-465e-ab00-5ee923f7db85` | human | 0.209 | HELD |
+| FL01_02 | flood_same_creator | 20 rapid submissions from one creator | 200 | `4aa4da7c-efc0-4e22-a9dc-a9c2688113b3` | human | 0.209 | HELD |
+| FL01_03 | flood_same_creator | 20 rapid submissions from one creator | 200 | `197a17ad-c025-45d4-82ba-e7d70604602c` | human | 0.209 | HELD |
+| FL01_04 | flood_same_creator | 20 rapid submissions from one creator | 200 | `fd41f1d2-b82f-4773-b69a-8ef9cd148d8d` | human | 0.209 | HELD |
+| FL01_05 | flood_same_creator | 20 rapid submissions from one creator | 200 | `18619dc2-ee06-4907-9452-0d20a91e3054` | human | 0.209 | HELD |
+| FL01_06 | flood_same_creator | 20 rapid submissions from one creator | 200 | `024dfe94-2fb5-4b7d-ba62-c2b07a3c16d2` | human | 0.209 | HELD |
+| FL01_07 | flood_same_creator | 20 rapid submissions from one creator | 200 | `559453e5-251d-4cad-9b0c-28d10d7c2210` | human | 0.209 | HELD |
+| FL01_08 | flood_same_creator | 20 rapid submissions from one creator | 200 | `05fc9ab5-fc8b-4abb-808c-49745cce2a58` | human | 0.209 | HELD |
+| FL01_09 | flood_same_creator | 20 rapid submissions from one creator | 200 | `a85861b7-e57d-4c3e-a342-5f512c203fe5` | human | 0.209 | HELD |
+| FL01_10 | flood_same_creator | 20 rapid submissions from one creator | 200 | `84316c75-ae80-47bf-903e-409d946aebc6` | human | 0.209 | HELD |
+| FL01_11 | flood_same_creator | 20 rapid submissions from one creator | 429 | `—` | — | — | HELD |
+| FL01_12 | flood_same_creator | 20 rapid submissions from one creator | 429 | `—` | — | — | HELD |
 
+Note: MF07 — Right-to-left text (BROKE):
+The application accepted the text and returned HTTP 200, but classified it as AI-generated with a score of 0.784.
+I marked this attack as BROKE because the result raises a concern about how reliable the detector is with different languages and writing systems. Right-to-left text is valid input and should not be rejected just because of its language.
+I cannot confirm that this was a false positive without knowing the actual origin of the text. More testing would be needed to evaluate the detector's accuracy with these languages.
 
 
 **Did it help, and how do I know:**
+The improvement helped with API input validation. Before the change, the application did not consistently reject invalid requests. After adding validation to the /submit route, all ten invalid requests returned HTTP 400 in each of the three trials.
+One tradeoff is that the application now rejects text shorter than 20 characters or longer than 10,000 characters, even when the text is legitimate.
 
 <!-- Widening the unsure band usually fixes one problem and creates another.
      Reporting that trade honestly is worth full credit. -->
 
-
+| Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. False Positive Protection | ≤1/10 high-confidence AI labels | 3/10 | 3/10 | 3/10 | MISSED |
+| 2. AI-Generated Text Detection | ≥8/10 high-confidence AI labels | 2/10 | 2/10 | 2/10 | MISSED |
+| 3. Signal Disagreement Handling | 10/10 labeled unsure | 10/10 | 10/10 | 10/10 | MET |
+| 4. Appeal Process | 10/10 valid appeals record correctly | 10/10 | 10/10 | 10/10 | MET |
+| 5. API Input Validation | 10/10 invalid requests return HTTP 400 | 10/10 | 10/10 | 10/10 | MET |
 
 ---
 
@@ -823,9 +907,22 @@ The malformed-input failures have a clearer cause: missing validation in the `/s
 <!-- For each attack still getting through and each criterion still missed:
      what you'd do, and why you stopped. -->
 
+After adding input validation, the application handles invalid requests better, but some problems remain.
+1. False Positive Protection — MISSED
+Three out of ten human-written texts were still classified as AI-generated in each trial. The detector continues to have problems with formal writing, student essays, and repetitive writing styles.
+To improve this, I would test more human-written examples from different writing styles and review how the two signals calculate their scores. My priority would be reducing false accusations.
+2. AI-Generated Text Detection — MISSED
+The detector correctly identified only two out of ten AI-generated texts in each trial. Evasion attacks EV01–EV09 also continued to avoid a high-confidence AI classification.
+I would investigate why the model and style signals produce low scores for these texts and test possible adjustments to the scoring method. However, I would need to make sure these changes do not increase false positives.
+3. Remaining Malformed Input Issues
+Although Criterion 5 passed, some malformed-input attacks still returned HTTP 200. For example, control characters, punctuation-only text, and emoji-only text were accepted and classified.
+The application also classified right-to-left text as AI-generated. This raises a question about the detector's reliability with different languages, although I cannot confirm that the result was incorrect without knowing the text's origin.
+I would improve the validation of unusable inputs and evaluate the detector with more languages. Valid text should not be rejected simply because it uses a different writing system.
 
+The remaining problems require more testing and changes to the detection signals. I decided not to modify the scoring method without enough evidence that the changes would improve accuracy without increasing false positives.
 
 **The trade I'd make if this ran for real:**
+I would prioritize reducing false positives, even if that means more AI-generated text receives an unsure classification. A person incorrectly accused of using AI could face more serious consequences than a detector failing to identify some AI-generated content.
 
 <!-- Two sentences. Fewer wrong accusations means more AI text getting through.
      Say which way you'd go and WHO PAYS FOR IT. -->
