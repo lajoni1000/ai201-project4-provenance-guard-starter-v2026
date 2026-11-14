@@ -952,9 +952,25 @@ However, I identified a gap in the audit logging process. Rate-limited requests 
 Shape B — Harden Against Failure
 For my Capstone, I chose to improve audit logging for rejected requests. My goal is to record invalid submissions with enough information to understand what happened, including the creator ID when available, input characteristics, rejection reason, HTTP status, and timestamp.
 I will also add basic request-duration monitoring and verify that the logs do not store the original submitted text.
-Out of scope: I will not change the AI detection model or classification thresholds, redesign the appeal process, or replace the existing audit logging system with a database.
+## Out of scope: 
+I will not change the AI detection model or classification thresholds, redesign the appeal process, or replace the existing audit logging system with a database.
 
-
+## Milestone 2 — Build and Regression Checks
+Extended Provenance Guard to log HTTP 400 validation failures and
+standardize HTTP 429 rejection records.
+The new rejection logs include a timestamp, creator ID, rejection
+reason, HTTP status, input type, and text length without storing
+the submitted text.
+Development smoke checks:
+- HTTP 400: Invalid text length returned 400 and created an audit entry.
+- HTTP 429: Ten invalid requests returned 400; the eleventh
+  returned 429 and created a rate-limited audit entry.
+- Detection: A valid submission returned a classification and
+  created a decision audit entry.
+- Appeals: An appeal for an existing content ID was accepted
+  and recorded with status "under_review".
+These checks confirm basic functionality and regression behavior.
+Formal acceptance-criteria evaluation will be performed later.
 
 
 
