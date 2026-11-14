@@ -972,6 +972,52 @@ Development smoke checks:
 These checks confirm basic functionality and regression behavior.
 Formal acceptance-criteria evaluation will be performed later.
 
+## Milestone 3
+### Local Execution Evidence — November 14, 2026
+
+I executed 10 valid requests against the local `/submit` endpoint to verify that the application records processing metrics.
+
+All 10 requests returned HTTP 200. The following entries were extracted from `logs/audit.jsonl`.
+
+```json
+{"timestamp": "2026-11-14T22:14:42+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 86.98, "input_type": "str", "text_length": 129}
+{"timestamp": "2026-11-14T22:14:42+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 100.59, "input_type": "str", "text_length": 129}
+{"timestamp": "2026-11-14T22:14:42+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 84.57, "input_type": "str", "text_length": 129}
+{"timestamp": "2026-11-14T22:14:42+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 81.34, "input_type": "str", "text_length": 129}
+{"timestamp": "2026-11-14T22:14:42+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 82.49, "input_type": "str", "text_length": 129}
+{"timestamp": "2026-11-14T22:14:43+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 195.01, "input_type": "str", "text_length": 129}
+{"timestamp": "2026-11-14T22:14:43+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 83.73, "input_type": "str", "text_length": 129}
+{"timestamp": "2026-11-14T22:14:43+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 75.68, "input_type": "str", "text_length": 129}
+{"timestamp": "2026-11-14T22:14:43+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 83.77, "input_type": "str", "text_length": 129}
+{"timestamp": "2026-11-14T22:14:43+00:00", "event": "request_metrics", "endpoint": "/submit", "http_status": 200, "outcome": "success", "duration_ms": 94.87, "input_type": "str", "text_length": 129}
+```
+
+The logs record the request outcome, HTTP status, duration, input type, and text length without including the submitted text.
+
+
+
+### Local Execution Cost — November 14, 2026
+
+Provenance Guard runs the GPT-2 detection model locally, without using a paid inference API.
+
+I measured the processing duration of 10 valid `/submit` requests using the structured `request_metrics` entries in `logs/audit.jsonl`.
+
+| Metric | Result |
+|---|---|
+| Requests measured | 10 |
+| Successful HTTP responses | 10/10 |
+| Total measured processing time | 969.03 ms |
+| Average processing time | 96.903 ms |
+| Minimum processing time | 75.68 ms |
+| Maximum processing time | 195.01 ms |
+| Direct inference API cost for 10 requests | $0.00 |
+| Direct inference API cost per request | $0.00 |
+
+**Calculation method:** I selected the 10 successful request metrics from the controlled local run and calculated their total, average, minimum, and maximum processing durations.
+
+The API cost was $0.00 because the requests used a locally executed model and did not invoke a paid inference API.
+
+This estimate excludes electricity, hardware, and maintenance costs. The measured durations also reflect a warm-model run rather than initial model loading.
 
 
 
