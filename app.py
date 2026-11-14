@@ -104,21 +104,31 @@ if config.RATE_LIMITING_ENABLED:
 
         ⚠️ An attack that shows up only as an absence is one you'll never find.
         """
+
         payload = request.get_json(silent=True)
+
         if not isinstance(payload, dict):
             payload = {}
+
+        creator_id = payload.get("creator_id")
+        text = payload.get("text")
+
         audit.log_rejection(
-            creator_id=payload.get("creator_id", "unknown"),
+            creator_id=creator_id if isinstance(creator_id, str) and creator_id.strip() else "unknown",
             reason="rate_limited",
+            http_status=429,
+            input_type=type(text).__name__,
+            text_length=len(text) if isinstance(text, str) else 0,
             limit=str(exc.description),
         )
+
         return jsonify({
             "error": "rate_limited",
             "message": "Too many submissions. Try again shortly.",
             "limit": str(exc.description),
         }), 429
 
-
+        
 # ── The worked example. Already works. Don't edit. ────────────────────────────
 
 @app.post("/ping")
