@@ -208,19 +208,48 @@ def submit():
     payload = request.get_json(silent=True)
 
     # Validate the request before processing the text.
+    # Log rejected requests for auditing without storing the submitted text.
     if not isinstance(payload, dict):
+        audit.log_rejection(
+            creator_id="unknown",
+            reason="invalid_json",
+            http_status=400,
+            input_type=type(payload).__name__,
+            text_length=0
+        )
         return jsonify({"error": "A valid JSON object is required."}), 400
 
     text = payload.get("text")
     creator_id = payload.get("creator_id")
 
     if not isinstance(text, str) or not text.strip():
+        audit.log_rejection(
+            creator_id=creator_id if isinstance(creator_id, str) and creator_id.strip() else "unknown",
+            reason="invalid_text",
+            http_status=400,
+            input_type=type(text).__name__,
+            text_length=len(text) if isinstance(text, str) else 0
+        )
         return jsonify({"error": "Valid text is required."}), 400
 
     if len(text) < 20 or len(text) > 10000:
+        audit.log_rejection(
+            creator_id=creator_id if isinstance(creator_id, str) and creator_id.strip() else "unknown",
+            reason="invalid_text_length",
+            http_status=400,
+            input_type=type(text).__name__,
+            text_length=len(text)
+        )
         return jsonify({"error": "Text must be between 20 and 10000 characters."}), 400
 
     if not isinstance(creator_id, str) or not creator_id.strip():
+        audit.log_rejection(
+            creator_id="unknown",
+            reason="invalid_creator_id",
+            http_status=400,
+            input_type=type(text).__name__,
+            text_length=len(text)
+        )
         return jsonify({"error": "A valid creator_id is required."}), 400
 
     content_id = str(uuid.uuid4())
