@@ -6,6 +6,114 @@ This is a **web service**. It runs on your machine and you talk to it with
 `curl` from another terminal. If you've not built a backend before, that's
 assumed — the starter ships one that already answers.
 
+
+
+## Unit 9 — Capstone: Running Provenance Guard (Path B)
+
+This capstone extends the existing Provenance Guard application with improved audit logging for rejected requests.
+
+The project uses **Path B: Local with Logs** because the local detection model and its dependencies require more memory than typical free hosting environments provide.
+
+### 1. Prerequisites
+
+- Python and Git installed
+- Windows PowerShell
+- Internet connection for installing dependencies and downloading the model
+
+### 2. Clone the Repository
+
+Open PowerShell and run:
+
+```powershell
+git clone https://github.com/lajoni1000/ai201-project4-provenance-guard-starter-v2026.git
+cd ai201-project4-provenance-guard-starter-v2026
+```
+
+### 3. Set Up the Environment
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python test.py
+```
+
+### 4. Prepare the Detection Model
+
+```powershell
+python detector.py
+```
+
+The first run may download the local model.
+
+### 5. Start the Application
+
+```powershell
+python app.py
+```
+
+The service runs locally at:
+
+`http://127.0.0.1:5000`
+
+Keep this terminal open.
+
+### 6. Verify the Application
+
+Open a second PowerShell terminal.
+
+Check the service:
+
+```powershell
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/health"
+```
+
+Test a rejected submission:
+
+```powershell
+$body = @{
+    creator_id = "capstone_setup_test"
+    text = "Too short"
+} | ConvertTo-Json
+
+try {
+    Invoke-WebRequest `
+        -Uri "http://127.0.0.1:5000/submit" `
+        -Method POST `
+        -ContentType "application/json" `
+        -Body $body `
+        -UseBasicParsing
+} catch {
+    Write-Host "HTTP status:" ([int]$_.Exception.Response.StatusCode)
+}
+```
+
+An HTTP 400 response is expected because the submitted text is too short.
+
+### 7. Check the Audit Logs
+
+Review the audit records:
+
+```powershell
+Get-Content .\logs\audit.jsonl -Tail 5
+```
+
+The rejected request should produce an audit record with its timestamp, rejection reason, HTTP status, input type, and text length.
+
+### 8. Stop the Application
+
+Return to the terminal running Flask and press `Ctrl+C`.
+
+### 9. Observability and Cost Measurement
+
+The Capstone will document request duration, HTTP status, outcome, and processing cost after the instrumentation and measurement steps are completed.
+
+---
+
+
+## Original Setup and Development Instructions (Units 7–8)
+
+
 ---
 
 ## Before your first class
