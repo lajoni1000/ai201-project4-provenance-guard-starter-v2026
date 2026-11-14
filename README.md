@@ -940,6 +940,23 @@ I would prioritize reducing false positives, even if that means more AI-generate
 <!-- Two sentences. Fewer wrong accusations means more AI text getting through.
      Say which way you'd go and WHO PAYS FOR IT. -->
 
+<!-- ═══════════════════════ UNIT 9 — THE CAPSTONE ═══════════════════════ -->
+
+## What This Extend
+
+Provenance Guard is a Flask-based service that analyzes submitted text using a model signal and a writing-style signal. It returns a classification and supports an appeal process.
+During Unit 8, I added input validation and rate limiting. The system now rejects invalid submissions with HTTP 400 and excessive requests with HTTP 429.
+However, I identified a gap in the audit logging process. Rate-limited requests are recorded, but requests rejected during input validation are not. This makes it difficult to review why those requests failed.
+
+## The Shape
+Shape B — Harden Against Failure
+For my Capstone, I chose to improve audit logging for rejected requests. My goal is to record invalid submissions with enough information to understand what happened, including the creator ID when available, input characteristics, rejection reason, HTTP status, and timestamp.
+I will also add basic request-duration monitoring and verify that the logs do not store the original submitted text.
+Out of scope: I will not change the AI detection model or classification thresholds, redesign the appeal process, or replace the existing audit logging system with a database.
+
+
+
+
 
 
 <!-- ═════════════════════════════════════════════════════════════════════
