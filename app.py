@@ -25,8 +25,9 @@ Routes:
 """
 
 import uuid
+from time import perf_counter
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, g
 
 import audit
 import config
@@ -36,7 +37,49 @@ import scoring
 import stylometry
 
 app = Flask(__name__)
+@app.before_request
+def start_request_timer():
+    if request.path == "/submit":
+        g.start_time = perf_counter()
 
+
+@app.after_request
+def log_request_metrics(response):
+    if request.path != "/submit":
+        return response
+
+    payload = request.get_json(silent=True)
+
+    if not isinstance(payload, dict):
+        payload = {}
+
+    text = payload.get("text")
+    input_type = type(text).__name__
+    text_length = len(text) if isinstance(text, str) else 0
+
+    duration_ms = round(
+        (perf_counter() - g.start_time) * 1000, 2
+    )
+
+    if response.status_code == 200:
+        outcome = "success"
+    elif response.status_code in (400, 429):
+        outcome = "rejected"
+    else:
+        outcome = "error"
+
+    audit._append({
+        "timestamp": audit._now(),
+        "event": "request_metrics",
+        "endpoint": "/submit",
+        "http_status": response.status_code,
+        "outcome": outcome,
+        "duration_ms": duration_ms,
+        "input_type": input_type,
+        "text_length": text_length
+    })
+
+    return response
 
 # ── Rate limiting — UNIT 8 ────────────────────────────────────────────────────
 # Off until you turn it on. In unit 8, Milestone 1:
