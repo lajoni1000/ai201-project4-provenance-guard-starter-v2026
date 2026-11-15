@@ -942,18 +942,22 @@ I would prioritize reducing false positives, even if that means more AI-generate
 
 <!-- ═══════════════════════ UNIT 9 — THE CAPSTONE ═══════════════════════ -->
 
-## What This Extend
+## What This Extends
 
-Provenance Guard is a Flask-based service that analyzes submitted text using a model signal and a writing-style signal. It returns a classification and supports an appeal process.
-During Unit 8, I added input validation and rate limiting. The system now rejects invalid submissions with HTTP 400 and excessive requests with HTTP 429.
-However, I identified a gap in the audit logging process. Rate-limited requests are recorded, but requests rejected during input validation are not. This makes it difficult to review why those requests failed.
+Provenance Guard is a Flask-based AI text analysis service that combines a model signal and a writing-style signal to produce a classification. It also includes an appeal process, input validation, rate limiting, and audit logging.
+At the end of Unit 8, the service already rejected invalid submissions with HTTP 400 and excessive requests with HTTP 429. However, HTTP 400 validation failures were not recorded as rejection events in the audit trail. Rate-limited requests were logged, but their records contained fewer diagnostic fields.
+For Unit 9, I extended the existing system to improve failure traceability and operational observability.
+The extension adds structured audit records for four HTTP 400 validation failure conditions, standardizes HTTP 429 rejection records, and measures request duration and outcomes for the /submit endpoint.
+These changes do not alter the AI classification model or the rejection rules. Instead, they make rejected requests easier to investigate and provide measurable evidence of how the service behaves during successful and rejected submissions.
 
 ## The Shape
-Shape B — Harden Against Failure
-For my Capstone, I chose to improve audit logging for rejected requests. My goal is to record invalid submissions with enough information to understand what happened, including the creator ID when available, input characteristics, rejection reason, HTTP status, and timestamp.
-I will also add basic request-duration monitoring and verify that the logs do not store the original submitted text.
+I chose Shape B because my goal was to strengthen Provenance Guard's ability to document and diagnose failure conditions.
+During Unit 8, I identified a gap between rejecting an invalid request and preserving enough information to investigate that rejection later.
+My Capstone addresses this gap by recording structured information about validation failures and rate-limited requests, including the rejection reason, HTTP status, input type, text length, creator ID when available, and timestamp.
+I also added request-duration monitoring and outcome tracking to make the service's behavior measurable.
+
 ## Out of scope: 
-I will not change the AI detection model or classification thresholds, redesign the appeal process, or replace the existing audit logging system with a database.
+I will not change the detection model, classification thresholds, appeal workflow, or existing JSONL audit storage mechanism. I also will not implement automatic recovery from audit-storage failures.
 
 ## Milestone 2 — Build and Regression Checks
 Extended Provenance Guard to log HTTP 400 validation failures and
@@ -971,6 +975,17 @@ Development smoke checks:
   and recorded with status "under_review".
 These checks confirm basic functionality and regression behavior.
 Formal acceptance-criteria evaluation will be performed later.
+
+## Instrumentation
+
+The Capstone uses the existing JSONL audit logging system and adds request-level operational metrics.
+In `app.py`, the `before_request` handler starts a timer for `/submit` requests, and the `after_request` handler records the elapsed processing time using Python's `perf_counter()`.
+Each `request_metrics` entry includes a timestamp, endpoint, HTTP status, outcome, duration in milliseconds, input type, and text length.
+The outcome is recorded as `success` for HTTP 200, `rejected` for HTTP 400 or 429, and `error` for other response statuses.
+The submitted text is not included in these metrics. The system records input characteristics instead.
+The rejection audit records provide additional diagnostic information, including the specific rejection reason.
+This instrumentation helps distinguish successful requests from rejected requests and makes it possible to measure processing duration across different outcomes.
+
 
 ## Milestone 3
 ### Local Execution Evidence — November 14, 2026
@@ -996,10 +1011,8 @@ The logs record the request outcome, HTTP status, duration, input type, and text
 
 
 
-### Local Execution Cost — November 14, 2026
-
+### What It Costs
 Provenance Guard runs the GPT-2 detection model locally, without using a paid inference API.
-
 I measured the processing duration of 10 valid `/submit` requests using the structured `request_metrics` entries in `logs/audit.jsonl`.
 
 | Metric | Result |
@@ -1013,11 +1026,15 @@ I measured the processing duration of 10 valid `/submit` requests using the stru
 | Direct inference API cost for 10 requests | $0.00 |
 | Direct inference API cost per request | $0.00 |
 
+Projection for 100 requests per day:
+96.903 ms × 100 = 9,690.3 ms, or approximately 9.69 seconds of cumulative request processing time per day under similar test conditions. 
+
 **Calculation method:** I selected the 10 successful request metrics from the controlled local run and calculated their total, average, minimum, and maximum processing durations.
 
 The API cost was $0.00 because the requests used a locally executed model and did not invoke a paid inference API.
 
 This estimate excludes electricity, hardware, and maintenance costs. The measured durations also reflect a warm-model run rather than initial model loading.
+
 
 
 
