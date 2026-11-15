@@ -165,13 +165,13 @@ I chose 100% because rejected requests should remain traceable. Missing an audit
 **Acceptance criterion:**
 All 10 requests rejected with HTTP 429 must produce an audit log entry containing creator_id, input_type, text_length, reason, http_status, and timestamp.
 
-**Target:
+**Target**
 10 out of 10 HTTP 429 responses must be logged correctly in each of three independent trials.
 
-**Test method:
+**Test method**
 Send requests to the /submit endpoint until the configured rate limit is reached. Then submit 10 additional requests that receive HTTP 429 responses. Verify that each rejected request has a corresponding audit log entry containing all six required fields. Repeat the evaluation across three independent trials, allowing the rate-limit window to reset between trials.
 
-**Why this target:
+**Why this target**
 I chose 10 out of 10 because every request rejected by the rate limiter should be recorded. Missing even one audit entry could make it harder to investigate excessive requests or understand why requests were blocked.
 
 ## 3. Audit Log Preservation

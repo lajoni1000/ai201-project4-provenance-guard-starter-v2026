@@ -14,11 +14,22 @@ This capstone extends the existing Provenance Guard application with improved au
 
 The project uses **Path B: Local with Logs** because the local detection model and its dependencies require more memory than typical free hosting environments provide.
 
+
 ### 1. Prerequisites
 
-- Python and Git installed
+- Python 3.11–3.13 (Python 3.14 is not supported by some pinned course dependencies)
+- Git installed
 - Windows PowerShell
 - Internet connection for installing dependencies and downloading the model
+
+Verify your Python version:
+
+```powershell
+python --version
+```
+
+The output should show Python 3.11.x, 3.12.x, or 3.13.x.
+
 
 ### 2. Clone the Repository
 
@@ -100,18 +111,38 @@ Get-Content .\logs\audit.jsonl -Tail 5
 
 The rejected request should produce an audit record with its timestamp, rejection reason, HTTP status, input type, and text length.
 
-### 8. Stop the Application
+### 8. Run the Capstone Evaluation
+
+With the Flask application running, open a second PowerShell terminal in the project directory and activate the virtual environment.
+
+Run:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python run_eval_capstone.py
+```
+
+The evaluator runs all five Capstone acceptance criteria across three trials and generates a timestamped Markdown report in the `results/` directory.
+
+Each criterion receives a MET or MISSED verdict based on its original target in `criteria.md`.
+
+### 9. Stop the Application
 
 Return to the terminal running Flask and press `Ctrl+C`.
 
-### 9. Observability and Cost Measurement
+### 10. Observability and Cost Measurement
 
-The Capstone will document request duration, HTTP status, outcome, and processing cost after the instrumentation and measurement steps are completed.
+The Capstone records request duration, HTTP status, and outcome for `/submit` requests in `logs/audit.jsonl`.
+
+The `README.md` includes 10 real request-metrics entries, measured processing durations, the estimated direct inference API cost, and a projection for 100 requests per day.
+
+The evaluation results and before/after improvement evidence are documented in the Capstone section of `README.md` and the corresponding reports in the `results/` directory.
 
 ---
 
-
 ## Original Setup and Development Instructions (Units 7–8)
+
+**Note:** The instructions below are retained from the original Units 7–8 starter documentation for reference. Some sections describe the initial development process and may no longer reflect the current implementation. For the completed Capstone, including setup, execution, audit logging, and evaluation, follow the Unit 9 instructions above.
 
 
 ---
