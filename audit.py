@@ -102,13 +102,27 @@ def log_rejection(creator_id: str, reason: str, **extra) -> dict:
     thousand requests that got a 429 and left no trace look exactly like a
     quiet afternoon.
     """
+    # Only approved metadata fields may be written to rejection logs.
+    allowed_fields = {
+        "http_status",
+        "input_type",
+        "text_length",
+        "limit",
+    }
+
+    safe_extra = {
+        key: value
+        for key, value in extra.items()
+        if key in allowed_fields
+    }
+
     return _append({
         "timestamp": _now(),
         "creator_id": creator_id,
         "event": "rejected",
         "status": "rejected",
         "reason": reason,
-        **extra,
+        **safe_extra,
     })
 
 

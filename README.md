@@ -1036,7 +1036,79 @@ The API cost was $0.00 because the requests used a locally executed model and di
 This estimate excludes electricity, hardware, and maintenance costs. The measured durations also reflect a warm-model run rather than initial model loading.
 
 
+## Run Log and Verdicts
+The initial Capstone evaluation was completed using run_eval_capstone.py. Each of the five acceptance criteria was evaluated across three trials, using the original targets established in Milestone 4.
 
+| Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. HTTP 400 Audit Logging | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| 2. HTTP 429 Audit Logging | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| 3. Audit Log Preservation | 0 changes | 0 changes | 0 changes | 0 changes | MET |
+| 4. Request Instrumentation | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| 5. Raw Text Protection | 0 exposures | 0 exposures | 0 exposures | 0 exposures | MET 
+
+Evaluation evidence: results/capstone_run_20261114_193420_69d0d1.md
+
+These verdicts reflect the original acceptance criteria and the observed results. They do not establish that the system is free of all possible failures or privacy risks.
+
+### Diagnosis — All Five Criteria MET
+All five acceptance criteria were MET across three trials. No failures were observed against the original targets.
+However, AC5 — Raw Text Protection had a limited target. It verified that complete submitted texts were not exposed in audit records, but it did not independently check whether sensitive portions of those texts could appear in the logs.
+The relevant component is `audit.py::log_rejection()`. This function accepts additional fields through `**extra` and writes them to the audit log without restricting the field names. Although the current application does not pass raw submitted text to this function, a future change could accidentally introduce a sensitive field.
+**Original target:** Zero complete raw-text exposures across 10 requests, repeated in three trials.
+**Proposed tighter target:** Zero complete raw-text exposures and zero predefined sensitive-marker exposures across 10 requests, repeated in three trials.
+This is a potential data-minimization weakness identified through code review, not an observed data leak. 
+
+
+## The Improvement
+
+After the initial evaluation, all five acceptance criteria were MET across three trials. However, the AC5 diagnosis identified a potential data-minimization weakness in `audit.py::log_rejection()`.
+
+The function accepted arbitrary additional fields through `**extra`. Although the existing application did not pass raw submitted text to this function, an accidental future change could cause sensitive information to be recorded.
+
+I implemented one improvement: an allowlist that restricts additional rejection-log fields to `http_status`, `input_type`, `text_length`, and `limit`.
+
+**Controlled Before/After Test**
+
+Before the change, a simulated call containing `text="PRIVATE_TEST_MARKER"` included that field in the generated audit entry (`Marker exposed: True`).
+
+After the change, the same test excluded the private marker (`Marker exposed: False`) while preserving the required audit metadata.
+
+The controlled test intercepted the audit-writing function and did not modify the production audit log.
+
+**Full Acceptance Criteria Retest**
+
+I reran all five original acceptance criteria three times using the same evaluator, `run_eval_capstone.py`, without changing the original targets.
+
+All five criteria remained MET in all three trials.
+
+- Before report: `results/capstone_run_20261114_193420_69d0d1.md`
+- After report: `results/capstone_run_20261114_232400_145bf1.md`
+
+### Before vs. After Improvement — Acceptance Criteria
+
+| Acceptance Criterion | Target | Before — Trial 1 | Before — Trial 2 | Before — Trial 3 | After — Trial 1 | After — Trial 2 | After — Trial 3 | Final Verdict |
+|---|---|---|---|---|---|---|---|---|
+| AC1 — HTTP 400 Audit Logging | 10/10 | 10/10 | 10/10 | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| AC2 — HTTP 429 Audit Logging | 10/10 | 10/10 | 10/10 | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| AC3 — Audit Log Preservation | 0 changes | 0 | 0 | 0 | 0 | 0 | 0 | MET |
+| AC4 — Request Instrumentation | 10/10 | 10/10 | 10/10 | 10/10 | 10/10 | 10/10 | 10/10 | MET |
+| AC5 — Raw Text Protection | 0 exposures | 0 | 0 | 0 | 0 | 0 | 0 | MET |
+
+**Before evaluation:** `results/capstone_run_20261114_193420_69d0d1.md`
+
+**After evaluation:** `results/capstone_run_20261114_232400_145bf1.md`
+
+**Summary:** All five original acceptance criteria remained MET across three trials before and after the improvement. The full retest showed no regressions. The separate controlled privacy test demonstrated that the new allowlist blocked an unauthorized sensitive field that had previously reached the rejection audit record.
+
+### Did the improvement help?
+
+Yes, within the tested scope. The allowlist prevented an unauthorized `text` field from reaching the rejection audit record. The full retest showed no regressions against the five original acceptance criteria.
+
+The original AC5 results did not change because that criterion measured complete raw-text exposure during normal HTTP requests, not accidental extra fields passed directly to the logging function.
+
+### Remaining limitation: 
+The allowlist protects additional fields in rejection records. It does not validate every value in the allowed fields or prevent sensitive information from being written through other logging functions.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
